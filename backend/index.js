@@ -1,10 +1,15 @@
-const express = require('express')
-const app = express()
-const port = 8080
+const express = require('express');
+const app = express();
+const dotenv = require('dotenv');
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const router = require("./routes");
+
+// Loading the dotenv config files
+dotenv.config();
+
+app.use("/", router);
+
+const port = process.env.LOCALPORT || 3000;
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
