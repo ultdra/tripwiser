@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { store } from "../store"; // Adjust the import path according to your project structure
 import ReduxProvider from "./providers/ReduxProviders";
+import NavBar from "@/components/NavBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <NavBar />
+          {children}
+        </ReduxProvider>
       </body>
     </html>
   );
