@@ -11,8 +11,6 @@ const dotenv = require('dotenv');
 
 const router = require("./routes");
 
-//Middlewares
-const bodyParser = require('body-parser');
 
 // Loading the dotenv config files
 dotenv.config();
@@ -20,8 +18,7 @@ dotenv.config();
 //Utilization of middlewares
 app.use(helmet()) // Helmet is a set of preconfigured settings for headers. We will use default for basic security purposes.
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({urlencoded:true}));
+app.use(express.json());
 
 app.use("/", router);
 
