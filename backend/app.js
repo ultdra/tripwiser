@@ -2,15 +2,16 @@ const express = require('express');
 const session = require('express-session');
 const helmet = require('helmet')
 const {v4: uuidv4} = require('uuid')
-
+const dotenv = require('dotenv');
 
 const app = express();
 
-
-const dotenv = require('dotenv');
-
+const port = process.env.LOCALPORT || 3000;
+// Routes
 const router = require("./routes");
 
+//Initializing needed modules
+app.use(passport.initialize())
 
 // Loading the dotenv config files
 dotenv.config();
@@ -27,7 +28,6 @@ app.post("/tesPost", (req, res) => {
   res.send("Body received!");
 });
 
-const port = process.env.LOCALPORT || 3000;
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
