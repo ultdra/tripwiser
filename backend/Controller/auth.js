@@ -8,9 +8,13 @@ passport.use(new googleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:8080/auth/googlecallback"
-  }))
+  },
+  (accessToken, refreshToken, profile, cb) => {
+    return cb(null, profile)
+  }
+))
 
-export const ValidateGoogleToken = async (req,res) => {
+const ValidateGoogleToken = async (req,res) => {
     console.log(req.body)
     const {token} = req.body
 
@@ -21,12 +25,12 @@ export const ValidateGoogleToken = async (req,res) => {
           });
           const payload = ticket.getPayload();
           const userid = payload['sub'];
-          res.json({ userId: userid, email: payload['email'] });
+          return res.json({ userId: userid, email: payload['email'] });
     }
     catch(error)
     {
         console.error("Error verifying Google Token:", error)
-        res.status(401).json({error:'Invalid Token'})
+        return res.status(401).json({error:'Invalid Token'})
     }
 }
 
@@ -38,3 +42,4 @@ passport.deserializeUser((user,done) => {
     done(null, user)
 })
 
+module.exports = ValidateGoogleToken
